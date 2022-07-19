@@ -158,6 +158,6 @@ install(TARGETS openvdb
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib)
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/" # source directory
-    DESTINATION "include" # target directory
+    DESTINATION "include/openvdb" # target directory
     FILES_MATCHING # install only matched files
     PATTERN "*.h") # select header files
