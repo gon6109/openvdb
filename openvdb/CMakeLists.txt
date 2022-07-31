@@ -3,7 +3,22 @@ cmake_minimum_required(VERSION 3.24)
 project(OpenVDB)
 
 if(MSVC)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    option(USE_MSVC_RUNTIME_LIBRARY_DLL "Bulid as MultithreadedDLL" ON)
+endif()
+
+# specify msvc runtime library
+if(MSVC)
+    if(USE_MSVC_RUNTIME_LIBRARY_DLL)
+        cmake_policy(SET CMP0091 NEW)
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+        add_compile_definitions(OPENVDB_DLL)
+        add_compile_definitions(OPENVDB_PRIVATE)
+    else()
+        cmake_policy(SET CMP0091 NEW)
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    endif()
+
+    message(${CMAKE_MSVC_RUNTIME_LIBRARY})
 endif()
 
 set(HEADERS
